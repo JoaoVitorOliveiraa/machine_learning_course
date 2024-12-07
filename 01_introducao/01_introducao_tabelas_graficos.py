@@ -17,9 +17,6 @@ from pathlib import Path
 caminho_dados_iris = Path('../data') / 'Iris_Data.csv'
 dados_iris = pd.read_csv(caminho_dados_iris, delimiter=',', decimal='.')
 
-#dados = pd.read_csv('C:/Users/Pichau/Documents/João/UFRJ/Matérias/Quinto Período/Introdução ao Aprendizado de Máquina/scripts/Iris_Data.csv', delimiter=',', decimal='.')
-# dados = pd.read_csv('Iris_Data.csv', delimiter=',', decimal='.')
-
 #------------------------------------------------------------------------------
 # Exibir informações sobre o conjunto de dados
 #------------------------------------------------------------------------------
