@@ -3,34 +3,63 @@
 #==============================================================================
 
 #------------------------------------------------------------------------------
-# Importar a biblioteca Pandas e PyPlot
+# Importar a biblioteca Pandas, PyPlot e Path
 #------------------------------------------------------------------------------
 
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 #------------------------------------------------------------------------------
-# Importar o conjunto de dados MNIST
+# Importar o conjunto de dados Digits
 #------------------------------------------------------------------------------
 
-from sklearn.datasets import fetch_openml
+caminho_dados_digits = Path('../data') / 'Digits.xlsx'
+dados_digits = pd.read_excel(caminho_dados_digits)
 
-#------------------------------------------------------------------------------
-# Obtenção e impressão das chaves do conjunto de dados na tela
-#------------------------------------------------------------------------------
+dados_digits = dados_digits.iloc[:, 1:]   # Retirando a coluna dos id's.
 
-conjunto_dados_mnist = fetch_openml('mnist_784', version=1)
-print(f"\nChaves do Conjunto de Dados MNIST:\n {conjunto_dados_mnist.keys()}\n")
-print("Uma chave 'DESC' descreve o conjunto de dados.")
-print("Uma chave 'data' contém um array com uma linha por instância e uma coluna por característica.")
-print("Uma chave 'target' contém um array com os rótulos.\n")
+atributos = dados_digits.iloc[:, :-1].values
+rotulos = dados_digits.iloc[:, -1].values
 
 #------------------------------------------------------------------------------
 # Separar os atributos e o alvo, exibindo suas dimensões
 #------------------------------------------------------------------------------
 
-atributos, rotulos = conjunto_dados_mnist['data'], conjunto_dados_mnist['target']
-print(f"Dimensão das feactures: {atributos.shape}")
-print(f"Dimensão os rótulos: {rotulos.shape}")
-print(f"Feactures: \n{atributos}")
-print(f"\nRotulos: \n{rotulos}")
+print(f"\nDimensão das features: {atributos.shape}")
+print(f"\nDimensão dos rótulos: {rotulos.shape}")
+print(f"\nFeatures: \n{atributos}")
+print(f"\nRótulos: \n{rotulos}")
+
+# ------------------------------------------------------------------------------
+#  Visualizar um digito
+# ------------------------------------------------------------------------------
+
+# Cada imagem tem 8 x 8 pixels e cada característica representa a intensidade do pixel, do 0 (branco) a 16 (preto).
+
+# Um imagem por digito.
+# for index_digito in range(10):
+#     digito = atributos[index_digito]
+#     imagem_digito = digito.reshape(8, 8)
+#     plt.imshow(imagem_digito, cmap='binary')
+#     plt.show()
+
+# Uma figura com a imagem de todos os dígitos.
+plt.figure(figsize=(70, 50))
+for i in range(0, 10):
+    imagem_digito = plt.subplot(1, 10, i+1)
+    imagem_digito.set_title("Rótulo = %.0f" % rotulos[i])
+
+    imagem_digito.imshow(atributos[i, :].reshape(8, 8),
+                  # interpolation='spline16',
+                  # interpolation='nearest',
+                  interpolation='none',
+                  cmap='binary',
+                  vmin=0, vmax=16)
+    # plt.text(-8, 3, "y = %.2f" % y[i])
+
+    imagem_digito.set_xticks(())
+    imagem_digito.set_yticks(())
+
+plt.show()
+
