@@ -157,14 +157,14 @@ total = len(rotulos_treino)
 acertos = sum(rotulos_resposta_treino == rotulos_treino)
 erros = sum(rotulos_resposta_treino != rotulos_treino)
 
-print("Total de amostras: ", total)
-print("Respostas corretas:", acertos)
-print("Respostas erradas: ", erros)
+print("\tTotal de amostras: ", total)
+print("\tRespostas corretas:", acertos)
+print("\tRespostas erradas: ", erros)
 
 acuracia = acertos / total
 
-print("Acurácia = %.1f %%" % (100*acuracia))
-print("Taxa Erro = %4.1f %%" % (100*(1-acuracia)))
+print("\tAcurácia = %.1f %%" % (100*acuracia))
+print("\tTaxa Erro = %4.1f %%" % (100*(1-acuracia)))
 
 print("\n\t-----Classificador SGD (Fora da amostra)-----\n")
 
@@ -172,14 +172,14 @@ total = len(rotulos_teste)
 acertos = sum(rotulos_resposta_teste == rotulos_teste)
 erros = sum(rotulos_resposta_teste != rotulos_teste)
 
-print("Total de amostras: ", total)
-print("Respostas corretas:", acertos)
-print("Respostas erradas: ", erros)
+print("\tTotal de amostras: ", total)
+print("\tRespostas corretas:", acertos)
+print("\tRespostas erradas: ", erros)
 
 acuracia = acertos / total
 
-print("Acurácia  = %4.1f %%" % (100*acuracia))
-print("Taxa Erro = %4.1f %%" % (100*(1-acuracia)))
+print("\tAcurácia  = %4.1f %%" % (100*acuracia))
+print("\tTaxa Erro = %4.1f %%" % (100*(1-acuracia)))
 
 # -------------------------------------------------------------------------------
 # Matriz de confusão
@@ -189,32 +189,33 @@ matriz_de_confusao = confusion_matrix(rotulos_resposta_teste, rotulos_teste)
 print('\n\n\t-----Matriz de Confusao-----\n\n', matriz_de_confusao)
 
 # -------------------------------------------------------------------------------
-# Calculo da precisão através da função precision_score()
+# Calculo da precisão através da função precision_score(), usando a medida "macro"
 # -------------------------------------------------------------------------------
 
-precisao_score = precision_score(rotulos_teste, rotulos_resposta_teste)
-print("\n\n\t-----Precisão - precision_score()-----\n\n", precisao_score)
+precisao_score = precision_score(rotulos_teste, rotulos_resposta_teste, average='macro')
+print("\n\n\t-----Precisão - precision_score()-----\n\n\tPrecisão: ", precisao_score)
 
 # -------------------------------------------------------------------------------
 # Calculo da acurácia através da função accuracy_score()
 # -------------------------------------------------------------------------------
 
 acuracia_score = accuracy_score(rotulos_teste, rotulos_resposta_teste)
-print("\n\n\t-----Acurácia - accuracy_score()-----\n\n", acuracia_score)
+print("\n\n\t-----Acurácia - accuracy_score()-----\n\n\tAcurácia: ", acuracia_score)
 
 # -------------------------------------------------------------------------------
-# Calculo da revocação/sensibilidade (recall/sensitivity) através da função recall_score()
+# Calculo da revocação/sensibilidade (recall/sensitivity) através da função
+# recall_score(), usando a medida "macro"
 # -------------------------------------------------------------------------------
 
-revocacao_score = recall_score(rotulos_teste, rotulos_resposta_teste)
-print("\n\n\t-----Revocação/Sensibiliade - recall_score()-----\n\n", revocacao_score)
+revocacao_score = recall_score(rotulos_teste, rotulos_resposta_teste, average='macro')
+print("\n\n\t-----Revocação/Sensibiliade - recall_score()-----\n\n\tRevocação: ", revocacao_score)
 
 # -------------------------------------------------------------------------------
-# Calculo da métrica F1 através da função recall_score()
+# Calculo da métrica F1 através da função recall_score(), usando a medida "macro"
 # -------------------------------------------------------------------------------
 
-metrica_f1 = f1_score(rotulos_teste, rotulos_resposta_teste)
-print("\n\n\t-----F1 - f1_score()-----\n\n", metrica_f1)
+metrica_f1 = f1_score(rotulos_teste, rotulos_resposta_teste, average='macro')
+print("\n\n\t-----F1 - f1_score()-----\n\n\tF1: ", metrica_f1)
 
 # -------------------------------------------------------------------------------
 # Verificar os erros cometidos pelo classificador
