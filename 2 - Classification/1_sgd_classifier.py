@@ -192,31 +192,41 @@ print('\n\n\t-----Matriz de Confusao-----\n\n', matriz_de_confusao)
 # Verificar os erros cometidos pelo classificador
 # -------------------------------------------------------------------------------
 
+# Armazena a lista com as amostras dos erros
 indice_erro = np.where(rotulos_resposta_teste != rotulos_teste)[0]
+quantidade_erros = len(indice_erro)
 
-for i in range(len(indice_erro)):
-    plt.figure(figsize=(30, 180))
-    d_plot = plt.subplot(2, 10, 2*i+1)
-    d_plot.set_title("gabarito = %d ; resposta = %d" %
-                     (rotulos_teste[indice_erro[i]], rotulos_resposta_teste[indice_erro[i]]))
+# Exibe uma figura com os digitos dos erros.
+plt.figure(figsize=(30, 30))
+for i in range(quantidade_erros):
 
-    d_plot.imshow(atributos_teste[indice_erro[i], :].reshape(8, 8),
-                  # interpolation='spline16',
-                  interpolation='nearest',
-                  cmap='binary',
-                  vmin=0, vmax=16)
+    if quantidade_erros % 2 == 0:
+        quantidade_linhas_figura = 2
+        quantidade_colunas_figura = int(quantidade_erros / 2)
 
-    # d_plot = plt.subplot(2, 10, 2*i+2)
-    # d_plot.set_title("gabarito = %d ; resposta = %d" %
-    #                  (rotulos_teste[indice_erro[i]], rotulos_resposta_teste[indice_erro[i]]))
-    #
-    # d_plot.imshow(atributos_teste[indice_erro[i], :].reshape(8, 8),
-    #               interpolation='spline16',
-    #               # interpolation='nearest',
-    #               cmap='binary',
-    #               vmin=0, vmax=16)
+    elif quantidade_erros % 3 == 0:
+        quantidade_linhas_figura = 3
+        quantidade_colunas_figura = int(quantidade_erros / 3)
 
-    d_plot.set_xticks(())
-    d_plot.set_yticks(())
+    elif quantidade_erros % 5 == 0:
+        quantidade_linhas_figura = 5
+        quantidade_colunas_figura = int(quantidade_erros / 5)
+
+    else:
+        quantidade_linhas_figura = 3
+        quantidade_colunas_figura = 10
+
+    plot_erro = plt.subplot(quantidade_linhas_figura, quantidade_colunas_figura, i + 1)
+    plot_erro.set_title("gabarito = %d ; resposta = %d" %
+                        (rotulos_teste[indice_erro[i]], rotulos_resposta_teste[indice_erro[i]]))
+
+    plot_erro.imshow(atributos_teste[indice_erro[i], :].reshape(8, 8),
+                     # interpolation='spline16',
+                     interpolation='nearest',
+                     cmap='binary',
+                     vmin=0, vmax=16)
+
+    plot_erro.set_xticks(())
+    plot_erro.set_yticks(())
 
 plt.show()
