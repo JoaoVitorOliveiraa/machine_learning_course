@@ -254,3 +254,40 @@ for i in range(quantidade_erros):
     plot_erro.set_yticks(())
 
 plt.show()
+
+# -------------------------------------------------------------------------------
+# Testando outros números de vizinhos
+# -------------------------------------------------------------------------------
+
+print("\n\n\t-----Testando outros números de vizinhos-----\n")
+for k in range(1, 31):
+
+    classificador = KNeighborsClassifier(n_neighbors=k, weights="distance")
+    classificador = classificador.fit(atributos_treino, rotulos_treino)
+
+    y_resposta_treino = classificador.predict(atributos_treino)
+    y_resposta_teste = classificador.predict(atributos_teste)
+
+    acuracia_treino = accuracy_score(rotulos_treino, y_resposta_treino)
+    precisao_treino = precision_score(rotulos_treino, y_resposta_treino, average='macro')
+    revocacao_treino = recall_score(rotulos_treino, y_resposta_treino, average='macro')
+    f1_treino = f1_score(rotulos_treino, y_resposta_treino, average='macro')
+
+    acuracia_teste  = accuracy_score(rotulos_teste, y_resposta_teste)
+    precisao_teste = precision_score(rotulos_teste, y_resposta_teste, average='macro')
+    revocacao_teste = recall_score(rotulos_teste, y_resposta_teste, average='macro')
+    f1_teste = f1_score(rotulos_teste, y_resposta_teste, average='macro')
+
+    print(
+        f"\nNúmero de Vizinhos: {k}",
+        f"\nAcurácia no Treino: {(100*acuracia_treino):.3f}%",
+        f"\nErro no Treino: {(100*(1-acuracia_treino)):.3f}%",
+        f"\nPrecisão no Treino: {(100*precisao_treino):.3f}%",
+        f"\nRevocação no Treino: {(100*revocacao_treino):.3f}%",
+        f"\nF1 no Treino: {(100*f1_treino):.3f}%",
+        f"\nAcurácia no Teste: {(100*acuracia_teste):.3f}%",
+        f"\nErro no Teste: {(100*(1-acuracia_teste)):.3f}%"
+        f"\nPrecisão no Teste: {(100 * precisao_teste):.3f}%",
+        f"\nRevocação no Teste: {(100 * revocacao_teste):.3f}%",
+        f"\nF1 no Teste: {(100 * f1_teste):.3f}%\n"
+    )
