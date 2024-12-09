@@ -8,11 +8,11 @@
 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from pathlib import Path
+import matplotlib.pyplot as plt
 from sklearn.linear_model import SGDClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score, f1_score
 
 #------------------------------------------------------------------------------
 # Importar o conjunto de dados Digits
@@ -187,6 +187,34 @@ print("Taxa Erro = %4.1f %%" % (100*(1-acuracia)))
 
 matriz_de_confusao = confusion_matrix(rotulos_resposta_teste, rotulos_teste)
 print('\n\n\t-----Matriz de Confusao-----\n\n', matriz_de_confusao)
+
+# -------------------------------------------------------------------------------
+# Calculo da precisão através da função precision_score()
+# -------------------------------------------------------------------------------
+
+precisao_score = precision_score(rotulos_teste, rotulos_resposta_teste)
+print("\n\n\t-----Precisão - precision_score()-----\n\n", precisao_score)
+
+# -------------------------------------------------------------------------------
+# Calculo da acurácia através da função accuracy_score()
+# -------------------------------------------------------------------------------
+
+acuracia_score = accuracy_score(rotulos_teste, rotulos_resposta_teste)
+print("\n\n\t-----Acurácia - accuracy_score()-----\n\n", acuracia_score)
+
+# -------------------------------------------------------------------------------
+# Calculo da revocação/sensibilidade (recall/sensitivity) através da função recall_score()
+# -------------------------------------------------------------------------------
+
+revocacao_score = recall_score(rotulos_teste, rotulos_resposta_teste)
+print("\n\n\t-----Revocação/Sensibiliade - recall_score()-----\n\n", revocacao_score)
+
+# -------------------------------------------------------------------------------
+# Calculo da métrica F1 através da função recall_score()
+# -------------------------------------------------------------------------------
+
+metrica_f1 = f1_score(rotulos_teste, rotulos_resposta_teste)
+print("\n\n\t-----F1 - f1_score()-----\n\n", metrica_f1)
 
 # -------------------------------------------------------------------------------
 # Verificar os erros cometidos pelo classificador
