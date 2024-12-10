@@ -1,5 +1,5 @@
 #==============================================================================
-# Tópico 01 - Treinando um Classificador com a função KNeighborsClassifier
+# Tópico 02 - Treinando um Classificador com a função KNeighborsClassifier
 #==============================================================================
 
 #------------------------------------------------------------------------------
@@ -113,8 +113,6 @@ dados_embaralhados = dados_digits.sample(frac=1, random_state=11012005)
 
 # ------------------------------------------------------------------------------
 # Criar os arrays de atributos e rotulos para um conjunto de treino e de teste
-# iniciais (que seram utilizados para treinar o modelo) e um outro conjunto de
-# treino e teste para o teste final do modelo
 # ------------------------------------------------------------------------------
 
 
@@ -124,7 +122,7 @@ atributos_treino, atributos_teste, rotulos_treino, rotulos_teste = train_test_sp
                                                                                     random_state=11012005)
 
 # -------------------------------------------------------------------------------
-# Treinar um classificador SGD com o conjunto de treino
+# Treinar um classificador KNeighborsClassifier com o conjunto de treino
 # -------------------------------------------------------------------------------
 
 classificador_kneighbors = KNeighborsClassifier(n_neighbors=5, weights="uniform")
@@ -180,7 +178,7 @@ print("\tTaxa Erro = %4.1f %%" % (100*(1-acuracia)))
 # Matriz de confusão
 # -------------------------------------------------------------------------------
 
-matriz_de_confusao = confusion_matrix(rotulos_resposta_teste, rotulos_teste)
+matriz_de_confusao = confusion_matrix(rotulos_teste, rotulos_resposta_teste)
 print('\n\n\t-----Matriz de Confusao-----\n\n', matriz_de_confusao)
 
 # -------------------------------------------------------------------------------
