@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score, f1_score
-
+from scipy.stats import pearsonr
 #------------------------------------------------------------------------------
 # Importar o conjunto de dados Digits
 #------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ dados_digits = dados_digits.iloc[:, 1:]           # Retirando a coluna dos id's.
 #  Exibição das primeiras 10 linhas do conjunto de dados através da função head()
 # ------------------------------------------------------------------------------
 
-print(f"\n\t\t-----Dez primeiras linhas do dataset-----\n")
+print("\n\t\t-----Dez primeiras linhas do dataset-----\n")
 print(dados_digits.head(n=10))
 
 # ------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ print(dados_digits["target"].value_counts())
 #  Resumo dos atributos numéricos através da função describe()
 # ------------------------------------------------------------------------------
 
-print(f"\n\n\t-----Resumo dos atributos numéricos-----\n")
+print("\n\n\t-----Resumo dos atributos numéricos-----\n")
 print(dados_digits.describe())
 
 #------------------------------------------------------------------------------
@@ -61,6 +61,35 @@ rotulos = dados_digits.iloc[:, -1].to_numpy()      # ou :-1].values
 print("\n\n\t-----Dimensões-----")
 print(f"\nDimensão das features: {atributos.shape}")
 print(f"Dimensão dos rótulos: {rotulos.shape}\n")
+
+#------------------------------------------------------------------------------
+# Exibir as colunas do dataset e suas comparações gráficas com o alvo
+#------------------------------------------------------------------------------
+
+colunas = dados_digits.columns
+print("\n\n\t-----Colunas disponíveis-----\n")
+print(colunas)
+
+for col in colunas:
+    dados_digits.plot.scatter(x=col, y='target')
+
+#------------------------------------------------------------------------------
+# Exibir o coeficiente de Pearson de cada atributo (entre o mesmo e o alvo)
+#------------------------------------------------------------------------------
+
+# Primeira Maneira: Scipy
+for col in colunas:
+    print('%10s = %6.3f , p-value = %.9f' % (
+        col,
+        pearsonr(dados_digits[col], dados_digits['target'])[0],
+        pearsonr(dados_digits[col], dados_digits['target'])[1]
+    )
+    )
+
+# Segunda Maneira: Pandas
+corr_matrix = dados_digits.corr()
+correlacoes = corr_matrix["target"].sort_values(ascending=False)
+print(correlacoes)
 
 # ------------------------------------------------------------------------------
 #  Visualizar alguns digitos
